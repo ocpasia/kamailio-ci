@@ -35,9 +35,10 @@ if [ "${ALPINE_BRANCH}" = "edge" ]; then
     sed -i -e 's/latest$/edge/' Dockerfile.debug
 fi
 
-docker run --volume=`pwd`/../../..:/usr/src/kamailio \
-           --volume=`pwd`/build.sh:/build.sh \
-           --entrypoint=/build.sh \
-           kamailio/kamailio-ci:builder-alpine.${ALPINE_BRANCH}
+docker run --platform linux/amd64 \
+    --volume=`pwd`/../../..:/usr/src/kamailio \
+    --volume=`pwd`/build.sh:/build.sh \
+    --entrypoint=/build.sh \
+    kamailio/kamailio-ci:builder-alpine.${ALPINE_BRANCH}
 
 exit $?

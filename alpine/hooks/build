@@ -3,10 +3,11 @@
 IMAGE_NAME="${IMAGE_NAME:-kamailio:master}"
 
 init_local_repo() {
-    docker network create kamailio-build
+    docker network rm kamailio-build && docker network create kamailio-build
     docker run \
+           --platform linux/amd64 \
            --detach \
-           --network kamailio-build \
+           --network host \
            --name local-repo \
            --hostname local-repo \
            --rm=true \
